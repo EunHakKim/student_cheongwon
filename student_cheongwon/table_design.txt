@@ -1,0 +1,23 @@
+--Member--
+	member_id
+	name
+	studentid
+	password
+	major
+	studentyear
+
+--Post--
+	post_id
+	member_id
+	board_id
+	title
+	content
+	created_at
+	modified_at
+	views
+	notice_yn
+	delete_yn
+
+--Board--
+	board_id
+	name
