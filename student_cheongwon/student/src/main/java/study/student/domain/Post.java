@@ -25,6 +25,8 @@ public class Post {
 
     private int disagreeCnt;
 
+    private String writer;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;

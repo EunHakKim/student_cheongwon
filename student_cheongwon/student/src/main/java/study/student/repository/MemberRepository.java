@@ -7,12 +7,13 @@ import study.student.domain.Member;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class MemberRepository {
 
-    private EntityManager em;
+    private final EntityManager em;
 
     public void save(Member member) {
         em.persist(member);
@@ -27,9 +28,10 @@ public class MemberRepository {
                 .getResultList();
     }
 
-    public List<Member> findByName(String name) {
-        return em.createQuery("select m from Member m where m.name = :name", Member.class)
-                .setParameter("name", name)
+    public Optional<Member> findByStudentId(String studentId) {
+        List<Member> findMembers = em.createQuery("select m from Member m where m.studentId = :studentId", Member.class)
+                .setParameter("studentId", studentId)
                 .getResultList();
+        return findMembers.stream().findAny();
     }
 }

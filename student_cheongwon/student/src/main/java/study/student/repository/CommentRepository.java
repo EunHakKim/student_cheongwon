@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class CommentRepository {
 
-    private EntityManager em;
+    private final EntityManager em;
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public class PostRepository {
 
-    private EntityManager em;
+    private final EntityManager em;
 
     public void save(Post post) {
         em.persist(post);

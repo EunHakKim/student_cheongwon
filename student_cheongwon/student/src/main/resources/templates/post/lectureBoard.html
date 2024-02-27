@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>작성자</th>
+                <th>제목</th>
+                <th>찬성</th>
+                <th>반대</th>
+                <th>작성날짜</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post : ${posts}">
+                <td th:text="${post.getWriter()}"></td>
+                <td th:text="${post.getTitle()}"></td>
+                <td th:text="${post.getAgreeCnt()}"></td>
+                <td th:text="${post.getDisagreeCnt()}"></td>
+                <td th:text="${post.getCreatedAt()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:replace="fragments/footer :: footer"/>
+</div> <!-- /container -->
+</body>
+</html>
