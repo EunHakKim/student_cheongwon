@@ -23,9 +23,10 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public void join(JoinRequest joinRequest) {
+    public Member join(JoinRequest joinRequest) {
         Member member = Member.createMember(joinRequest);
         memberRepository.save(member);
+        return member;
     }
 
     public List<Member> findMembers() {

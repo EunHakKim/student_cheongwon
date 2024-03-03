@@ -3,7 +3,9 @@ package study.student.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import study.student.dto.PostRequest;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,13 +21,13 @@ public class Post {
 
     private String content;
 
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     private int agreeCnt;
 
     private int disagreeCnt;
 
-    private String writer;
+    private String writer;  //member의 이름 별도 저장
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -36,4 +38,24 @@ public class Post {
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<Comment> commentList;
+
+    /*
+        Post 생성 메서드
+     */
+    public static Post createPost(PostRequest postRequest, Member member) {
+        Post post = new Post();
+        post.setTitle(postRequest.getTitle());
+        post.setContent(postRequest.getContent());
+        if(postRequest.getBoard()==null){
+            post.setBoard(Board.ETC);   //게시판 지정이 없으면 기타 게시판으로
+        }else{
+            post.setBoard(postRequest.getBoard());
+        }
+        post.setCreatedAt(LocalDate.now());
+        post.setMember(member);
+        post.setWriter(member.getName());
+        post.setAgreeCnt(0);
+        post.setDisagreeCnt(0);
+        return post;
+    }
 }

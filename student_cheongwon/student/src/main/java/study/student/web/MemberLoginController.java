@@ -21,10 +21,15 @@ import study.student.service.MemberService;
 public class MemberLoginController {
 
     private final MemberService memberService;
+    private static String pastUri;  //로그인 이전 페이지로 이동 위한 static 변수
 
     @GetMapping
-    public String createLoginRequest(Model model) {
+    public String createLoginRequest(Model model, HttpServletRequest request) {
         model.addAttribute("loginRequest", new LoginRequest());
+        String uri = request.getHeader("Referer");
+        if (uri != null && !uri.contains("/login")) {
+            pastUri=uri;
+        }
         return "members/createLoginRequest";
     }
 
@@ -45,6 +50,11 @@ public class MemberLoginController {
         session.setAttribute("studentId", loginRequest.getStudentId());
         session.setMaxInactiveInterval(900);//session을 15분간 유지
 
-        return "redirect:/";
+        if (pastUri==null || pastUri.contains("/login")){
+            return "redirect:/";
+        } else{
+            return "redirect:"+pastUri.substring(21);
+        }
+
     }
 }

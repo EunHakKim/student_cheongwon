@@ -22,4 +22,16 @@ public class PostDisagree {
     private Member member;
 
     private boolean disagreeYn;
+
+    /*
+    생성 메서드
+     */
+
+    public static PostDisagree createPostDisagree(Post post, Member member) {
+        PostDisagree postDisagree = new PostDisagree();
+        postDisagree.setPost(post);
+        postDisagree.setMember(member);
+        postDisagree.setDisagreeYn(false);
+        return postDisagree;
+    }
 }

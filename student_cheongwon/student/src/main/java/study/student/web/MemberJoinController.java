@@ -31,7 +31,7 @@ public class MemberJoinController {
     }
 
     @GetMapping
-    public String create(Model model) {
+    public String joinRequest(Model model) {
         model.addAttribute("joinRequest", new JoinRequest());
         return "members/createJoinRequest";
     }

@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <th scope="row">작성자</th>
+            <td th:text="${post.getWriter()}"></td>
+
+            <th scope="row">게시판</th>
+            <td th:text="${post.getBoard().getDescription()}"></td>
+        </tr>
+        <tr>
+            <th scope="row">찬성</th>
+            <td th:text="${post.getAgreeCnt()}"></td>
+
+            <th scope="row">반대</th>
+            <td th:text="${post.getDisagreeCnt()}"></td>
+        </tr>
+        <tr>
+            <th scope="row">제목</th>
+            <td th:text="${post.getTitle()}"></td>
+
+            <th scope="row">작성 날짜</th>
+            <td th:text="${post.getCreatedAt()}"></td>
+        </tr>
+        <tr>
+            <th scope="row">내용</th>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <p style="border: 2px solid#117a8b; border-radius: 7px;padding: 50px" th:text="${post.getContent()}" th:align="center"></p>
+
+    <p th:align="center" th:if="${agreeYn==null} and ${disagreeYn==null}">
+        <a class="btn btn-lg btn-outline-primary" th:href="@{|/post/${post.getId()}/agree|}">찬성</a>
+        <a class="btn btn-lg btn-outline-danger" th:href="@{|/post/${post.getId()}/disagree|}">반대</a>
+    </p>
+
+    <p th:align="center" th:if="${agreeYn==false} and ${disagreeYn==false}">
+        <a class="btn btn-lg btn-outline-primary" th:href="@{|/post/${post.getId()}/agree|}">찬성</a>
+        <a class="btn btn-lg btn-outline-danger" th:href="@{|/post/${post.getId()}/disagree|}">반대</a>
+    </p>
+
+    <p th:align="center" th:if="${agreeYn==true} and ${disagreeYn==false}">
+        <a class="btn btn-lg btn-primary" th:href="@{|/post/${post.getId()}/agree|}">찬성</a>
+        <a class="btn btn-lg btn-outline-danger" th:href="@{|/post/${post.getId()}/disagree|}">반대</a>
+    </p>
+
+    <p th:align="center" th:if="${agreeYn==false} and ${disagreeYn==true}">
+        <a class="btn btn-lg btn-outline-primary" th:href="@{|/post/${post.getId()}/agree|}">찬성</a>
+        <a class="btn btn-lg btn-danger" th:href="@{|/post/${post.getId()}/disagree|}">반대</a>
+    </p>
+
+    <br/>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+</html>

@@ -21,4 +21,16 @@ public class PostAgree {
     private Member member;
 
     private boolean agreeYn;
+
+    /*
+    생성 메서드
+     */
+
+    public static PostAgree createPostAgree(Post post, Member member) {
+        PostAgree postAgree = new PostAgree();
+        postAgree.setPost(post);
+        postAgree.setMember(member);
+        postAgree.setAgreeYn(false);
+        return postAgree;
+    }
 }
