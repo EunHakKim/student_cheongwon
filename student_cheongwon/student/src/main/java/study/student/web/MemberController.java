@@ -34,6 +34,10 @@ public class MemberController {
         if(session != null) {
             session.invalidate();
         }
-        return "redirect:/";
+        String uri = request.getHeader("Referer");
+        if (uri == null) {
+            return "redirect:/";
+        }
+        return "redirect:"+uri.substring(21);
     }
 }

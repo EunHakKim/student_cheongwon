@@ -10,11 +10,8 @@ import study.student.domain.Board;
 import study.student.domain.Member;
 import study.student.domain.Post;
 import study.student.dto.PostRequest;
-import study.student.repository.MemberRepository;
-import study.student.repository.PagingRepository;
+import study.student.repository.PostPagingRepository;
 import study.student.repository.PostRepository;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +20,7 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final PagingRepository pagingRepository;
+    private final PostPagingRepository postPagingRepository;
 
     @Transactional
     public Post writePost(PostRequest postRequest, Member member) {
@@ -37,10 +34,10 @@ public class PostService {
     }
 
     public Page<Post> findAll(Pageable pageable) {
-        return pagingRepository.findAll(pageable);
+        return postPagingRepository.findAll(pageable);
     }
 
     public Page<Post> findAllByBoard(Pageable pageable, Board board) {
-        return pagingRepository.findAllByBoard(pageable, board);
+        return postPagingRepository.findAllByBoard(pageable, board);
     }
 }

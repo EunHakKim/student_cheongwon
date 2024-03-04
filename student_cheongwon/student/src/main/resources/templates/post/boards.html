@@ -19,21 +19,21 @@
         </div>
     </div>
     <div>
-        <table class="table table-striped">
+        <table class="table table-striped" style="table-layout: fixed">
             <thead>
             <tr>
-                <th>작성자</th>
-                <th>제목</th>
-                <th>찬성</th>
-                <th>반대</th>
-                <th>작성날짜</th>
+                <th width="15%">작성자</th>
+                <th width="45%">제목</th>
+                <th width="10%">찬성</th>
+                <th width="10%">반대</th>
+                <th width="20%">작성날짜</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="post : ${posts}">
                 <td th:text="${post.getWriter()}"></td>
-                <td th:text="${post.getTitle()}"></td>
+                <td> <a th:href="@{|/post/${post.getId()}|}" th:text="${post.getTitle()}"> </a></td>
                 <td th:text="${post.getAgreeCnt()}"></td>
                 <td th:text="${post.getDisagreeCnt()}"></td>
                 <td th:text="${post.getCreatedAt()}"></td>
@@ -41,8 +41,8 @@
             </tbody>
         </table>
         <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
-            <a class="btn" th:if="${page != nowPage}" th:href="@{|/board/${board.name().toLowerCase()}?query=${page-1}|}" th:text="${page}"></a>
-            <a class="btn btn-outline-primary" th:if="${page==nowPage}" th:text="${page}"></a>
+            <a class="btn" th:if="${page != nowPage} and ${page != 0}" th:href="@{|/board/${board.name().toLowerCase()}?page=${page-1}|}" th:text="${page}"></a>
+            <a class="btn btn-outline-primary" th:if="${page==nowPage} and ${page != 0}" th:text="${page}"></a>
         </th:block>
         <div class="text-lg-right">
             <p><a class="btn btn-primary" href="/board/write">작성</a></p>
