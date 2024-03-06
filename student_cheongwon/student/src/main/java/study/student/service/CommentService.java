@@ -12,6 +12,7 @@ import study.student.dto.CommentRequest;
 import study.student.repository.CommentPagingRepository;
 import study.student.repository.CommentRepository;
 import study.student.repository.PostPagingRepository;
+import study.student.repository.PostRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -20,11 +21,17 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final CommentPagingRepository commentPagingRepository;
+    private final PostRepository postRepository;
 
     @Transactional
-    public Comment writeComment(CommentRequest commentRequest, Member member, Post post) {
+    public Comment writeComment(CommentRequest commentRequest, Member member, Long postId) {
+        Post post = postRepository.findOne(postId);
+        if(post==null){
+            throw new IllegalStateException("찾는 게시물이 없습니다.");
+        }
         Comment comment = Comment.createComment(commentRequest, member, post);
         commentRepository.save(comment);
+        post.setCommentCnt(post.getCommentCnt()+1);
         return comment;
     }
 
@@ -32,7 +39,8 @@ public class CommentService {
         return commentRepository.findOne(id);
     }
 
-    public Page<Comment> findAllByPost(Pageable pageable, Post post) {
+    public Page<Comment> findAllByPost(Pageable pageable, Long postId) {
+        Post post = postRepository.findOne(postId);
         return commentPagingRepository.findAllByPost(pageable,post);
     }
 }

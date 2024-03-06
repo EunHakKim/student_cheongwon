@@ -44,7 +44,7 @@ public class CommentServiceTest {
         //When
         Member member = memberService.join(joinRequest);
         Post post = postService.writePost(postRequest,member);
-        Comment comment = commentService.writeComment(commentRequest, member, post);
+        Comment comment = commentService.writeComment(commentRequest, member, post.getId());
 
         //Then
         Comment findComment = commentService.findOne(comment.getId());
@@ -80,11 +80,11 @@ public class CommentServiceTest {
         //When
         Member member = memberService.join(joinRequest);
         Post post = postService.writePost(postRequest,member);
-        Comment comment1 = commentService.writeComment(commentRequest1, member, post);
-        Comment comment2 = commentService.writeComment(commentRequest2, member, post);
+        Comment comment1 = commentService.writeComment(commentRequest1, member, post.getId());
+        Comment comment2 = commentService.writeComment(commentRequest2, member, post.getId());
 
         //Then
-        Page<Comment> findComments = commentService.findAllByPost(pageable, post);
+        Page<Comment> findComments = commentService.findAllByPost(pageable, post.getId());
         List<Comment> comments = findComments.getContent();
         org.assertj.core.api.Assertions.assertThat(comments).contains(comment1,comment2);
     }

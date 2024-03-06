@@ -21,10 +21,4 @@ public class CommentRepository {
     public Comment findOne(Long id) {
         return em.find(Comment.class,id);
     }
-
-    public List<Comment> findAllByPost(Post post) {
-        return em.createQuery("select c from Comment c where c.post=:post", Comment.class)
-                .setParameter("post", post)
-                .getResultList();
-    }
 }

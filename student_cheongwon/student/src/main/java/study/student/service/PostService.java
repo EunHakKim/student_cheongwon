@@ -13,6 +13,8 @@ import study.student.dto.PostRequest;
 import study.student.repository.PostPagingRepository;
 import study.student.repository.PostRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -39,5 +41,13 @@ public class PostService {
 
     public Page<Post> findAllByBoard(Pageable pageable, Board board) {
         return postPagingRepository.findAllByBoard(pageable, board);
+    }
+
+    public List<Post> findTop5ByAgreeCnt() {
+        return postRepository.findTop5ByAgreeCnt();
+    }
+
+    public List<Post> findTop5ByCommentCnt() {
+        return postRepository.findTop5ByCommentCnt();
     }
 }

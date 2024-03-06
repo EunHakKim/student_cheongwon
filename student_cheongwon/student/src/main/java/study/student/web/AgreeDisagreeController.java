@@ -29,11 +29,7 @@ public class AgreeDisagreeController {
         if (findMember.isEmpty()) {
             return "redirect:/members/login";
         }
-        Post findPost = postService.findOne(postId);
-        if(findPost==null) {
-            throw new IllegalStateException("찾는 게시물이 없습니다");
-        }
-        agreeDisagreeService.agree(findPost,findMember.get());
+        agreeDisagreeService.agree(postId,findMember.get());
         return "redirect:/post/"+ postId;
     }
 
@@ -44,11 +40,7 @@ public class AgreeDisagreeController {
         if (findMember.isEmpty()) {
             return "redirect:/members/login";
         }
-        Post findPost = postService.findOne(postId);
-        if(findPost==null) {
-            throw new IllegalStateException("찾는 게시물이 없습니다");
-        }
-        agreeDisagreeService.disagree(findPost,findMember.get());
+        agreeDisagreeService.disagree(postId,findMember.get());
         return "redirect:/post/"+ postId;
     }
 }

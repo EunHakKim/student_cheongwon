@@ -18,16 +18,6 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/{studentId}")
-    public String joinSuccess(@PathVariable("studentId")String studentId, Model model) {
-        Optional<Member> findMember = memberService.findByStudentId(studentId);
-        if(findMember.isEmpty()){
-            throw new IllegalStateException("존재하지 않는 학번입니다");
-        }
-        model.addAttribute("name", findMember.get().getName());
-        return "members/joinSuccess";
-    }
-
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);

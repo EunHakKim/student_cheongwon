@@ -48,6 +48,6 @@ public class MemberJoinController {
             return "members/createJoinRequest";
         }
         memberService.join(joinRequest);
-        return "redirect:/members/" + joinRequest.getStudentId();
+        return "redirect:/members/login/" + joinRequest.getStudentId();
     }
 }

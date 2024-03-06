@@ -7,36 +7,74 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
-    <div class="jumbotron">
-        <h1>Student-Cheongwon</h1>
-        <div th:if="${name == null}">
-            <p class="lead">회원 기능</p>
+    <div class="row">
+        <div class="col-lg-9 text-lg-left">
+            <h4 class="text-muted">게시판</h4>
             <p>
-                <a class="btn btn-lg btn-info" href="/members/join">회원가입</a>
-                <a class="btn btn-lg btn-info" href="/members/login">로그인</a>
+                <a class="btn btn-lg btn-secondary" href="/board/lecture">강의 관련</a>
+                <a class="btn btn-lg btn-dark" href="/board/facility">시설 관련</a>
+                <a class="btn btn-lg btn-secondary" href="/board/welfare">복지 관련</a>
+                <a class="btn btn-lg btn-dark" href="/board/cafeteria">학식 관련</a>
+            </p>
+            <p>
+                <a class="btn btn-lg btn-dark" href="/board/dormitory">기숙사 관련</a>
+                <a class="btn btn-lg btn-secondary" href="/board/etc">기타</a>
+                <a class="btn btn-lg btn-dark" href="/board">모든 게시물</a>
             </p>
         </div>
-        <div th:unless="${name == null}">
-            <p class="lead">회원 기능</p>
-            <p><h4>[[${name}]]님 환영합니다!</h4></p>
-            <p><a class="btn btn-lg btn-info" href="/members/logout">로그아웃</a></p>
+        <div class="col-lg-3 text-lg-right">
+            <h4 class="text-muted">회원 관리</h4>
+            <div th:unless="${name == null}">
+                <p>
+                    <h6>[[${name}]]님</h6>
+                    <h6>환영합니다!</h6>
+                </p>
+                <p><a class="btn btn-info" href="/members/logout">로그아웃</a></p>
+            </div>
+            <div th:if="${name == null}">
+                <p><a class="btn btn-info" href="/members/join">회원가입</a></p>
+                <p><a class="btn btn-info" href="/members/login">로그인</a></p>
+            </div>
         </div>
-        <p class="lead">게시판</p>
-        <p>
-            <a class="btn btn-lg btn-dark" href="/board">모든 게시물</a>
-        </p>
-        <p>
-            <a class="btn btn-lg btn-secondary" href="/board/lecture">강의 관련</a>
-            <a class="btn btn-lg btn-secondary" href="/board/facility">시설 관련</a>
-        </p>
-        <p>
-            <a class="btn btn-lg btn-dark" href="/board/welfare">복지 관련</a>
-            <a class="btn btn-lg btn-dark" href="/board/cafeteria">학식 관련</a>
-        </p>
-        <p>
-            <a class="btn btn-lg btn-secondary" href="/board/dormitory">기숙사 관련</a>
-            <a class="btn btn-lg btn-secondary" href="/board/etc">기타</a>
-        </p>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-lg-6">
+            <h4 class="text-muted">많은 동의을 받은 게시물</h4>
+            <table class="table table-striped" style="table-layout: fixed">
+                <thead>
+                <tr>
+                    <th width="70%">제목</th>
+                    <th width="30%">찬성</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="post : ${postsByAgreeCnt}">
+                    <td> <a th:href="@{|/post/${post.getId()}|}" th:text="${post.getTitle()}"> </a></td>
+                    <td th:text="${post.getAgreeCnt()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-6">
+            <h4 class="text-muted">많은 댓글이 달린 게시물</h4>
+            <table class="table table-striped" style="table-layout: fixed">
+                <thead>
+                <tr>
+                    <th width="70%">제목</th>
+                    <th width="30%">댓글수</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="post : ${postsByCommentCnt}">
+                    <td> <a th:href="@{|/post/${post.getId()}|}" th:text="${post.getTitle()}"> </a></td>
+                    <td th:text="${post.getCommentCnt()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->

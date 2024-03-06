@@ -9,11 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import study.student.domain.Member;
 import study.student.dto.LoginRequest;
 import study.student.service.MemberService;
+
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -56,5 +59,15 @@ public class MemberLoginController {
             return "redirect:"+pastUri.substring(21);
         }
 
+    }
+
+    @GetMapping("/{studentId}")
+    public String joinSuccess(@PathVariable("studentId")String studentId, Model model) {
+        Optional<Member> findMember = memberService.findByStudentId(studentId);
+        if(findMember.isEmpty()){
+            throw new IllegalStateException("존재하지 않는 학번입니다");
+        }
+        model.addAttribute("name", findMember.get().getName());
+        return "members/joinSuccess";
     }
 }

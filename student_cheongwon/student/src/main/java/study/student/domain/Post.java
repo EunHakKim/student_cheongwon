@@ -29,6 +29,8 @@ public class Post {
 
     private String writer;  //member의 이름 별도 저장
 
+    private int commentCnt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -56,6 +58,7 @@ public class Post {
         post.setWriter(member.getName());
         post.setAgreeCnt(0);
         post.setDisagreeCnt(0);
+        post.setCommentCnt(0);
         return post;
     }
 }

@@ -45,13 +45,13 @@ public class CommentController {
         }
         Member member = findMember.get();
         if(result.hasErrors()) {
-            Boolean agreeYn = agreeDisagreeService.checkAgree(findPost, member);
-            Boolean disagreeYn = agreeDisagreeService.checkDisagree(findPost, member);
+            Boolean agreeYn = agreeDisagreeService.checkAgree(postId, member);
+            Boolean disagreeYn = agreeDisagreeService.checkDisagree(postId, member);
             model.addAttribute("agreeYn",agreeYn);
             model.addAttribute("disagreeYn",disagreeYn);
             model.addAttribute("name", member.getName());
 
-            Page<Comment> findComments = commentService.findAllByPost(pageable, findPost);
+            Page<Comment> findComments = commentService.findAllByPost(pageable, postId);
 
             int nowPage = findComments.getPageable().getPageNumber() + 1;
             int startPage = Math.max(nowPage - 4, 1);
@@ -65,7 +65,7 @@ public class CommentController {
             model.addAttribute("commentRequest", commentRequest);
             return "post/post";
         }
-        commentService.writeComment(commentRequest,member,findPost);
+        commentService.writeComment(commentRequest,member,postId);
         return "redirect:/post/"+postId;
 
     }

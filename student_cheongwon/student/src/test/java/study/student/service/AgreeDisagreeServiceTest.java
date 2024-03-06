@@ -37,7 +37,7 @@ public class AgreeDisagreeServiceTest {
         Post post = postService.writePost(postRequest,member);
 
         //When
-        agreeDisagreeService.agree(post,member);
+        agreeDisagreeService.agree(post.getId(),member);
 
         //Then
         Assertions.assertEquals(post.getAgreeCnt(),1);
@@ -63,7 +63,7 @@ public class AgreeDisagreeServiceTest {
         Post post = postService.writePost(postRequest,member);
 
         //When
-        agreeDisagreeService.disagree(post,member);
+        agreeDisagreeService.disagree(post.getId(),member);
 
         //Then
         Assertions.assertEquals(post.getAgreeCnt(),0);
@@ -89,8 +89,8 @@ public class AgreeDisagreeServiceTest {
         Post post = postService.writePost(postRequest,member);
 
         //When
-        agreeDisagreeService.agree(post,member);
-        agreeDisagreeService.agree(post,member);
+        agreeDisagreeService.agree(post.getId(),member);
+        agreeDisagreeService.agree(post.getId(),member);
 
         //Then
         Assertions.assertEquals(post.getAgreeCnt(),0);
@@ -116,8 +116,8 @@ public class AgreeDisagreeServiceTest {
         Post post = postService.writePost(postRequest,member);
 
         //When
-        agreeDisagreeService.disagree(post,member);
-        agreeDisagreeService.disagree(post,member);
+        agreeDisagreeService.disagree(post.getId(),member);
+        agreeDisagreeService.disagree(post.getId(),member);
 
         //Then
         Assertions.assertEquals(post.getAgreeCnt(),0);
@@ -143,8 +143,8 @@ public class AgreeDisagreeServiceTest {
         Post post = postService.writePost(postRequest,member);
 
         //When
-        agreeDisagreeService.agree(post,member);
-        agreeDisagreeService.disagree(post,member);
+        agreeDisagreeService.agree(post.getId(),member);
+        agreeDisagreeService.disagree(post.getId(),member);
 
         //Then
         Assertions.assertEquals(post.getAgreeCnt(),0);
@@ -170,8 +170,8 @@ public class AgreeDisagreeServiceTest {
         Post post = postService.writePost(postRequest,member);
 
         //When
-        agreeDisagreeService.disagree(post,member);
-        agreeDisagreeService.agree(post,member);
+        agreeDisagreeService.disagree(post.getId(),member);
+        agreeDisagreeService.agree(post.getId(),member);
 
         //Then
         Assertions.assertEquals(post.getAgreeCnt(),1);

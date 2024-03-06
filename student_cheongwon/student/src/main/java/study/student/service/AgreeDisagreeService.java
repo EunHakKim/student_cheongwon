@@ -8,6 +8,7 @@ import study.student.domain.Post;
 import study.student.domain.PostAgree;
 import study.student.domain.PostDisagree;
 import study.student.repository.AgreeDisagreeRepository;
+import study.student.repository.PostRepository;
 
 import java.util.Optional;
 
@@ -17,9 +18,14 @@ import java.util.Optional;
 public class AgreeDisagreeService {
 
     private final AgreeDisagreeRepository agreeDisagreeRepository;
+    private final PostRepository postRepository;
 
     @Transactional
-    public void agree(Post post, Member member) {
+    public void agree(Long postId, Member member) {
+        Post post = postRepository.findOne(postId);
+        if(post==null) {
+            throw new IllegalStateException("찾는 게시물이 없습니다.");
+        }
         Optional<PostAgree> findPostAgree = agreeDisagreeRepository.findPostAgreeByPostAndMember(post, member);
         Optional<PostDisagree> findPostDisagree = agreeDisagreeRepository.findPostDisagreeByPostAndMember(post, member);
 
@@ -53,7 +59,11 @@ public class AgreeDisagreeService {
     }
 
     @Transactional
-    public void disagree(Post post, Member member) {
+    public void disagree(Long postId, Member member) {
+        Post post = postRepository.findOne(postId);
+        if(post==null) {
+            throw new IllegalStateException("찾는 게시물이 없습니다.");
+        }
         Optional<PostAgree> findPostAgree = agreeDisagreeRepository.findPostAgreeByPostAndMember(post, member);
         Optional<PostDisagree> findPostDisagree = agreeDisagreeRepository.findPostDisagreeByPostAndMember(post, member);
 
@@ -86,14 +96,16 @@ public class AgreeDisagreeService {
         }
     }
 
-    public Boolean checkAgree(Post post, Member member) {
+    public Boolean checkAgree(Long postId, Member member) {
+        Post post = postRepository.findOne(postId);
         Optional<PostAgree> findPostAgree = agreeDisagreeRepository.findPostAgreeByPostAndMember(post, member);
         if(findPostAgree.isEmpty()){
             return null;
         }else return findPostAgree.get().isAgreeYn();
     }
 
-    public Boolean checkDisagree(Post post, Member member) {
+    public Boolean checkDisagree(Long postId, Member member) {
+        Post post = postRepository.findOne(postId);
         Optional<PostDisagree> findPostDisagree = agreeDisagreeRepository.findPostDisagreeByPostAndMember(post, member);
         if(findPostDisagree.isEmpty()) {
             return null;
